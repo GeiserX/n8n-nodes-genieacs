@@ -1,0 +1,52 @@
+{
+	"name": "n8n-nodes-genieacs",
+	"version": "0.1.0",
+	"description": "n8n community node for GenieACS — TR-069 device management, provisioning, and monitoring",
+	"keywords": [
+		"n8n-community-node-package",
+		"genieacs",
+		"tr-069",
+		"cpe",
+		"device-management",
+		"iot",
+		"router",
+		"provisioning",
+		"isp"
+	],
+	"license": "MIT",
+	"author": {
+		"name": "GeiserX"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/GeiserX/n8n-nodes-genieacs.git"
+	},
+	"main": "index.js",
+	"scripts": {
+		"prebuild": "node build-icons.cjs",
+		"build": "tsc && node build-icons.cjs",
+		"lint": "tsc --noEmit",
+		"prepublishOnly": "npm run build"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"credentials": [
+			"dist/credentials/GenieAcsApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/GenieAcs/GenieAcs.node.js",
+			"dist/nodes/GenieAcs/GenieAcsTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@types/node": "^25.5.0",
+		"n8n-workflow": "^1.70.0",
+		"typescript": "^5.7.0"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}
