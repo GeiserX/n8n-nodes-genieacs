@@ -21,7 +21,7 @@
 		"type": "git",
 		"url": "https://github.com/GeiserX/n8n-nodes-genieacs.git"
 	},
-	"main": "index.js",
+	"main": "dist/nodes/GenieAcs/GenieAcs.node.js",
 	"scripts": {
 		"prebuild": "node build-icons.cjs",
 		"build": "tsc && node build-icons.cjs",

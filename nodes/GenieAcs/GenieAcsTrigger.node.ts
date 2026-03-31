@@ -22,6 +22,7 @@ async function pollEndpoint(
 ): Promise<INodeExecutionData[][] | null> {
 	const webhookData = ctx.getWorkflowStaticData('node');
 	const knownIds = (webhookData[stateKey] as string[] | undefined) ?? [];
+	const isFirstPoll = knownIds.length === 0 && webhookData[stateKey] === undefined;
 
 	const response = await ctx.helpers.httpRequest({
 		method: 'GET',
@@ -32,16 +33,26 @@ async function pollEndpoint(
 	});
 
 	const items = Array.isArray(response) ? response : [];
-	const newItems: INodeExecutionData[] = [];
 	const currentIds: string[] = [];
 
 	for (const item of items) {
 		const id = (item as IDataObject)._id as string;
 		if (id) {
 			currentIds.push(id);
-			if (!knownIds.includes(id)) {
-				newItems.push({ json: item as IDataObject });
-			}
+		}
+	}
+
+	// On first poll, seed state with current IDs without emitting events
+	if (isFirstPoll) {
+		webhookData[stateKey] = currentIds;
+		return null;
+	}
+
+	const newItems: INodeExecutionData[] = [];
+	for (const item of items) {
+		const id = (item as IDataObject)._id as string;
+		if (id && !knownIds.includes(id)) {
+			newItems.push({ json: item as IDataObject });
 		}
 	}
 
