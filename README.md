@@ -57,6 +57,18 @@ npm install n8n-nodes-genieacs
 - [n8n-nodes-telegram-archive](https://github.com/GeiserX/n8n-nodes-telegram-archive) — Telegram message archive
 - [n8n-nodes-way-cms](https://github.com/GeiserX/n8n-nodes-way-cms) — Web archive content management
 
+
+## Related Projects
+
+| Project | Description |
+|---------|-------------|
+| [genieacs-container](https://github.com/GeiserX/genieacs-container) | Original and most popular Helm Chart / Container for GenieACS |
+| [genieacs-sim-container](https://github.com/GeiserX/genieacs-sim-container) | Docker for the GenieACS Simulator |
+| [genieacs-ha](https://github.com/GeiserX/genieacs-ha) | Home Assistant custom integration for GenieACS TR-069 router management |
+| [genieacs-mcp](https://github.com/GeiserX/genieacs-mcp) | MCP Server for GenieACS written in Go |
+| [genieacs-ansible](https://github.com/GeiserX/genieacs-ansible) | Ansible Galaxy collection for GenieACS TR-069 ACS |
+| [genieacs-services](https://github.com/GeiserX/genieacs-services) | Systemd/Supervisord services for GenieACS processes |
+
 ## License
 
 [GPL-3.0](LICENSE)
