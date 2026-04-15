@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/images/banner.svg" alt="n8n-nodes-genieacs banner" width="900"/>
+</p>
+
 # n8n-nodes-genieacs
 
 n8n community node for [GenieACS](https://genieacs.com/) — TR-069 device management, provisioning, and monitoring.
