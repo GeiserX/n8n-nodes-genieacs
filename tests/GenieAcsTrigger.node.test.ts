@@ -115,4 +115,58 @@ describe('GenieAcsTrigger Node', () => {
 
 		expect(result).toBeNull();
 	});
+
+	it('handles non-array response gracefully', async () => {
+		const staticData: Record<string, any> = {};
+		const ctx = createMockContext(
+			{ event: 'newFault', limit: 50 },
+			staticData,
+			{ not: 'an array' },
+		);
+
+		const result = await trigger.poll.call(ctx as any);
+
+		expect(result).toBeNull();
+		expect(staticData['knownFaultIds']).toEqual([]);
+	});
+
+	it('skips items without _id field', async () => {
+		const staticData: Record<string, any> = {
+			knownFaultIds: [],
+		};
+		const ctx = createMockContext(
+			{ event: 'newFault', limit: 50 },
+			staticData,
+			[{ _id: 'fault-1' }, { noId: true }, { _id: 'fault-2' }],
+		);
+
+		const result = await trigger.poll.call(ctx as any);
+
+		expect(result).not.toBeNull();
+		expect(result![0]).toHaveLength(2);
+		expect(staticData['knownFaultIds']).toEqual(['fault-1', 'fault-2']);
+	});
+
+	it('strips trailing slashes from credentials URL', async () => {
+		const staticData: Record<string, any> = {};
+		const ctx = {
+			getNodeParameter: (name: string, fallback?: any) =>
+				({ event: 'newFault', limit: 50 }[name] ?? fallback),
+			getWorkflowStaticData: () => staticData,
+			helpers: {
+				httpRequest: vi.fn().mockResolvedValue([{ _id: 'f1' }]),
+			},
+			getCredentials: vi.fn().mockResolvedValue({
+				url: 'http://localhost:7557/',
+				username: 'admin',
+				password: 'secret',
+			}),
+		};
+
+		await trigger.poll.call(ctx as any);
+
+		const callUrl = ctx.helpers.httpRequest.mock.calls[0][0].url;
+		expect(callUrl).not.toContain('//faults');
+		expect(callUrl).toBe('http://localhost:7557/faults/');
+	});
 });
