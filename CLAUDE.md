@@ -1,4 +1,4 @@
-# AGENTS.md — n8n-nodes-genieacs
+# CLAUDE.md — n8n-nodes-genieacs
 
 ## Project Overview
 
