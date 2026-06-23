@@ -43,7 +43,7 @@
 		]
 	},
 	"devDependencies": {
-		"@types/node": "^25.5.0",
+		"@types/node": "^26.0.0",
 		"@vitest/coverage-v8": "^4.1.5",
 		"n8n-workflow": "^2.13.1",
 		"typescript": "^6.0.2",
